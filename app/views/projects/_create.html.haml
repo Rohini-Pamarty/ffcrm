@@ -1,0 +1,11 @@
+= form_for(@project, :html => one_submit_only(:project), :remote => true) do |f|
+  = link_to_close new_project_path + "?view=#{@view}"
+  = hidden_field_tag :view, @view
+  = hidden_field_tag "project[user_id]", @current_user.id
+  = hidden_field_tag "project[asset_id]", "#{@asset.id if @asset}"
+  = hidden_field_tag "project[asset_type]", "#{@asset.class if @asset}"
+  = render "projects/top_section", :f => f
+  .buttonbar
+    = f.submit t :create_project
+    #{t :or}
+    = link_to_cancel new_project_path + "?view=#{@view}"

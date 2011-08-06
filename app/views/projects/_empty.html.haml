@@ -1,0 +1,4 @@
+#empty
+  == #{t(:no_projects, t('no_projects_' + @view))}.
+  - if @view != "completed"
+    == #{t :feel_free} #{link_to(t(:create_project_small), new_project_path + "?view=#{@view}", :remote => true)}.

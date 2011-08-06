@@ -1,0 +1,10 @@
+page.call "crm.flick", :empty, :toggle
+page.call "crm.flip_form", :create_project
+
+unless params[:cancel].true?
+  page[:create_project].replace_html :partial => "create"
+  page.call "crm.set_title", :create_project, t(:create_project)
+  page.call "crm.date_select_popup", :project_calendar, :project_bucket, Setting.project_calendar_with_time
+else
+  page.call "crm.set_title", :create_project, (@view == "assigned" ? t(:assigned_projects) : t(:projects))
+end

@@ -1,0 +1,17 @@
+if called_from_index_page? # Completing from pending projects view -- fade out project partial and update sidebar.
+
+  page[dom_id(@project, :tools)].hide
+  page[dom_id(@project)].visual_effect :fade, :duration => 0.5
+  if @empty_bucket
+    page["list_#{@empty_bucket}"].visual_effect :fade, :duration => 0.5
+  end
+  page << refresh_sidebar(:index, :filters)
+
+else # Completing from the Asset page -- replace project partial with completed one.
+
+  page[dom_id(@project)].hide
+  page[dom_id(@project)].replace_html :partial => "projects/completed", :collection => [ @project ], :locals => { :bucket => nil }
+  page[dom_id(@project)].visual_effect :appear, :duration => 0.5
+  page[:recently].replace :partial => "common/recently"
+
+end

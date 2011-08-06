@@ -1,0 +1,18 @@
+.filters#filters
+  = render "selector"
+  - if @view == "pending" || @view == "assigned"
+    - Setting.unroll(:project_bucket).each do |value, key|
+      .check_box{:style => "border-bottom: 1px silver dotted;"}
+        %div{:style => "float:right;"}
+          = @project_total[key]
+        = project_filter_checbox(@view, key, @project_total[key]) << " " << t(value)
+  - else # @view == "completed"
+    - Setting.unroll(:project_completed).each do |value, key|
+      .check_box{:style => "border-bottom: 1px silver dotted;"}
+        %div{:style => "float:right;"}
+          = @project_total[key]
+        = project_filter_checbox(@view, key, @project_total[key]) << " " << t(value)
+  .check_box
+    %div{:style => "float:right;"}
+      %b= @project_total[:all]
+    %b== #{t(:total_projects, t(@view + '_projects'))}
